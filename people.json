@@ -1,0 +1,51 @@
+{
+  "people": [
+    {
+      "firstname": "Jane",
+      "lastname": "Anderson",
+      "phonetype": "cell",
+      "phonenumber": "111-111-1111",
+      "addresses": []
+    },
+    {
+      "firstname": "Joe",
+      "lastname": "Sonos",
+      "phonetype": "office",
+      "phonenumber": "111-111-1111",
+      "addresses": [
+        {
+            "type": "home",
+            "street": "27 Magnolia Street",
+            "city": "Maplewood",
+            "state": "NJ"
+        },
+        {
+            "type": "work",
+            "street": "4 Main Street",
+            "city": "Montclair",
+            "state": "NJ"
+        }
+      ]
+    },
+    {
+      "firstname": "Alison",
+      "lastname": "Demming",
+      "phonetype": "home",
+      "phonenumber": "111-111-1111",
+      "addresses": [
+        {
+            "type": "home",
+            "street": "27 Magnolia Street",
+            "city": "Maplewood",
+            "state": "NJ"
+        },
+        {
+            "type": "work",
+            "street": "12 Main Street",
+            "city": "Montclair",
+            "state": "NJ"
+        }
+      ]
+    }
+  ]
+}
