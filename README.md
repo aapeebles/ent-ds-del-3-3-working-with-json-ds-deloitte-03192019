@@ -3,7 +3,7 @@
 
 
 ## Introduction
-When you retrieve information from an API, it is often stored in either an XML or a JSON format. In this lesson, we look at what JSON is, the problems it solves, and provide a litle hands on experience working with it. 
+When you retrieve information from an API, it is often stored in either an XML or a JSON format. In this lesson, we look at what JSON is, the problems it solves, and provide some hands on experience working with it. 
 
 
 ## Objectives
@@ -13,7 +13,7 @@ You will be able to:
 
 ## XML - lite
 
-In the early 2000's, XML was becoming increasingly popular - not only as a data interchange format but also as a configuration format to allow developers to set options and values in their code. However, while XML is powerful, it requires a lot of typing and isn't very readable as so much of the text required in an XML document is the repetition of the field descriptions using tags. Look at the snippet of XML below - 62 characters to convey a 4 character first name. Of course, this is a particularly bad example, but XML certainly isn't concise.
+In the early 2000's, XML was becoming increasingly popular - not only as a data interchange format but also as a configuration format to allow developers to set options and values in their code. However, while XML is powerful, it requires a lot of typing and isn't very readable as so much of the text required in an XML document is the repetition of the field descriptions using tags. Look at the snippet of XML below - 62 characters to convey a 4 character first name!
 
 ```
 <people>
@@ -23,7 +23,9 @@ In the early 2000's, XML was becoming increasingly popular - not only as a data 
 </people>
 ```
 
-At around the same time, Douglas Crockford first specified and popularized another format for sending information over the web - it was called JSON (pronounced Jay-son - like the name "Jason"). It is short for JavaScript Object Notation and was originally intended to be part of the JavaScript scripting language, although it was always language agnostic (you can read and write JSON using almost any programmiung language).
+Of course, this is a particularly bad example, but XML certainly isn't concise, and that is a problem both for humans having to read and edit XML files and *(in the case of very large files)* for the time it takes to transfer the information from one computer to another.
+
+At around the same time, Douglas Crockford first specified and popularized another format for sending information over the web - it was called JSON (pronounced Jay-son - like the name "Jason"). It is short for JavaScript Object Notation and was originally intended to be part of the JavaScript scripting language, although it was always language agnostic (you can read and write JSON using almost any programming language).
 
 Over time, and especially with the rise in popularity of Javascript for adding functionality to web pages, JSON has become one of the most popular formats for sending and retrieving information from APIs.
 
@@ -60,7 +62,7 @@ Some key things to notice:
 * This looks a lot like a Python dictionary
 * The `people` key has a value type of list (notice the square brackets) and is a list of JSON objects (which in Python gets stored as a list of dictionaries)
 * The key/value pairs are both wrapped in quotation marks (e.g. both `"firstname"` and `"Jane"` have the quotes)
-* The "value" of a key value can be another collection of key value pairs - in the same way that in XML the `<person>` tag could contain a set of sub-tags like `<firstname>` and `<phone>`
+* The "value" of a key value can be another object (another collection of key value pairs) - in the same way that in XML the `<person>` tag could contain a set of sub-tags like `<firstname>` and `<phone>`
 * There is not the same concept of "attributes" as in XML. You notice we had to add another key-value pair for the `phonetype`. We could also have created a `phone` object with a `type` and a `number` key - `"phone" : { "type": "cell",  "number": "111-111-1111"}`
 * Indentation is useful to ensure you match your opening and closing brackets, but it is not meaningful. The following JSON will work just the same as the example above:
 
@@ -86,23 +88,12 @@ print(data)
 
 ```
 
-    <class 'dict'>
-    {'people': [{'firstname': 'Jane', 'lastname': 'Anderson', 'phonetype': 'cell', 'phonenumber': '111-111-1111', 'addresses': []}, {'firstname': 'Joe', 'lastname': 'Sonos', 'phonetype': 'office', 'phonenumber': '111-111-1111', 'addresses': [{'type': 'home', 'street': '27 Magnolia Street', 'city': 'Maplewood', 'state': 'NJ'}, {'type': 'work', 'street': '4 Main Street', 'city': 'Montclair', 'state': 'NJ'}]}, {'firstname': 'Alison', 'lastname': 'Demming', 'phonetype': 'home', 'phonenumber': '111-111-1111', 'addresses': [{'type': 'home', 'street': '27 Magnolia Street', 'city': 'Maplewood', 'state': 'NJ'}, {'type': 'work', 'street': '12 Main Street', 'city': 'Montclair', 'state': 'NJ'}]}]}
-
-
 As you'll see, the json library loaded this into a Python dictionary that we can now traverse. Lets start by having a look around:
 
 
 ```python
 data.keys()
 ```
-
-
-
-
-    dict_keys(['people'])
-
-
 
 Looks like we have a top level key of "people", let's see what's contained within it . . .
 
@@ -112,45 +103,7 @@ print(type(data["people"]))
 data["people"]
 ```
 
-    <class 'list'>
-
-
-
-
-
-    [{'firstname': 'Jane',
-      'lastname': 'Anderson',
-      'phonetype': 'cell',
-      'phonenumber': '111-111-1111',
-      'addresses': []},
-     {'firstname': 'Joe',
-      'lastname': 'Sonos',
-      'phonetype': 'office',
-      'phonenumber': '111-111-1111',
-      'addresses': [{'type': 'home',
-        'street': '27 Magnolia Street',
-        'city': 'Maplewood',
-        'state': 'NJ'},
-       {'type': 'work',
-        'street': '4 Main Street',
-        'city': 'Montclair',
-        'state': 'NJ'}]},
-     {'firstname': 'Alison',
-      'lastname': 'Demming',
-      'phonetype': 'home',
-      'phonenumber': '111-111-1111',
-      'addresses': [{'type': 'home',
-        'street': '27 Magnolia Street',
-        'city': 'Maplewood',
-        'state': 'NJ'},
-       {'type': 'work',
-        'street': '12 Main Street',
-        'city': 'Montclair',
-        'state': 'NJ'}]}]
-
-
-
-There we go, that's a list of people. OK, lets try to do what we did with the XML file - let's retrieve the phone number for each of the people and put them all in a list . . . 
+There we go, that's a List of people. OK, lets try to do what we did with the XML file - let's retrieve the phone number for each of the people and put them all in a list . . . 
 
 
 ```python
@@ -159,9 +112,6 @@ for person in data["people"]:
     phone_numbers.append(person["phonenumber"])
 print(phone_numbers)
 ```
-
-    ['111-111-1111', '111-111-1111', '111-111-1111']
-
 
 Great - now lets try to get a list of addresses - lets just take the cities and make a list of them first.
 
@@ -174,12 +124,11 @@ for person in data["people"]:
 print(cities)
 ```
 
-    ['Maplewood', 'Montclair', 'Maplewood', 'Montclair']
+OK, now it's your turn! Instead of creating a List of every city, create a Set of the distinct cities.
 
+Great! Now iterate over the document and create & print a list of first names:
 
-OK, now it's your turn! Start by iterating over the document and creating & printing a list of first names:
-
-Great, now go in and create a list of the states that the people have an address in:
+Perfect! Now go in and create a list of the states that the people have an address in:
 
 Now, create a list of full names *(hint, you'll have to concatenate the first name, a space and then the last name for every full name)*:
 
@@ -199,57 +148,10 @@ for person in data["people"]:
 df.head ()
 ```
 
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>firstname</th>
-      <th>lastname</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Jane</td>
-      <td>Anderson</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Joe</td>
-      <td>Sonos</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Alison</td>
-      <td>Demming</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
 Great, now create a DataFrame that contains the first name, last name and phone for every person:
 
 ## Extra Credit (1)
-Sometimes you need to perform more complex transformations to create the DataFrame you want. Write some code to create a DataFrame with one row per address, containing the first name, last name and all of the address information for each address (anyone without an address simply won't show up in the DataFrame).
+Sometimes you need to perform more complex transformations to create the DataFrame you want. Write some code to create a DataFrame with one row per address, containing the first name, last name and all of the address information for each address *(anyone without an address simply won't show up in the DataFrame)*.
 
 ## Extra Credit (2)
 There is another file in this directory - `nyc_2001_campaign_finance.json`. Open the file using Python, explore it, and create a DataFrame containing the Candidate Name, Primary Pay, General Pay, Runoff Pay and Total Pay for each candidate.
